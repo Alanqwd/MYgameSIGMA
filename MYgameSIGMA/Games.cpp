@@ -71,9 +71,28 @@ void printFieldFirstHuman(char fieldFirstHuman[field_sizeByX][field_sizeByY])
 }
 //Работает
 
+void printFieldSecondHuman(char fieldSecondHuman[field_sizeByX][field_sizeByY])
+{
+    std::cout << "  ";
+    for (int i = 0; i < field_sizeByX; ++i)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << "\n";
 
+    for (int i = 0; i < field_sizeByY; ++i)
+    {
+        std::cout << static_cast<char>('A' + i) << " ";
+        for (int j = 0; j < field_sizeByX; ++j)
+        {
+            std::cout << fieldSecondHuman[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+}
+//Работает
 // Карта
-void FieldShips()
+void FieldShipsFirstHuman()
 {
     char fieldFirstHuman[field_sizeByX][field_sizeByY];
 
@@ -90,7 +109,22 @@ void FieldShips()
 
 }
 //  Работает 
+void FieldShipsSecondHuman()
+{
+    char fieldSecondHuman[field_sizeByX][field_sizeByY];
 
+    for (int i = 0; i < field_sizeByX; ++i)
+    {
+        for (int j = 0; j < field_sizeByX; ++j)
+        {
+            fieldSecondHuman[i][j] = empty_cell;
+        }
+    }
+    printFieldSecondHuman(fieldSecondHuman);
+
+
+
+}
 
 
 // Растановка кораблей первого человека на поле
@@ -102,7 +136,7 @@ void placeShipsFirstHuman(char fieldFirstHuman[field_sizeByX][field_sizeByY])
     std::cout << " заполнит поле кораблями: \n";
 
     // Первый корабль
-    FieldShips();
+    FieldShipsFirstHuman();
     std::cout << "\nВыбери цифрой расположение для 1 корабля по вертикали: ";
     if (!(std::cin >> tempInput))
     {
@@ -305,7 +339,7 @@ void placeShipsSecondHuman(char fieldSecondHuman[field_sizeByX][field_sizeByY])
     std::cout << "Пусть ";
     std::cout << NameSecondHuman;
     std::cout << " заполнит поле кораблями: \n";
-    FieldShips();
+    FieldShipsSecondHuman();
     std::cout << "\nВыбери цифрой расположение для 1 корабля по вертикали: ";
     if (!(std::cin >> tempInput))
     {
@@ -512,7 +546,7 @@ bool checkHitAndUpdateField(char field[][field_sizeByX], int y, int x, char ship
 }
 //Работает
 
-void updateAndPrintField(char field[field_sizeByX][field_sizeByY], int y, int x, bool hit)
+void updateAndPrintFieldFirstHuman(char field[field_sizeByX][field_sizeByY], int y, int x, bool hit)
 {
     // Обновляем поле в зависимости от результата атаки
     field[y][x] = hit ? 'X' : '*';
@@ -534,6 +568,37 @@ void updateAndPrintField(char field[field_sizeByX][field_sizeByY], int y, int x,
             if (field[i][j] == 'X' || field[i][j] == '*' || field[i][j] == empty_cell)
             {
                 std::cout << field[i][j] << " ";
+            }
+            else
+            {
+                std::cout << empty_cell << " "; // Заменяем символы кораблей на пустые ячейки
+            }
+        }
+        std::cout << "\n";
+    }
+}
+void updateAndPrintFieldSecondHuman(char fieldSecondHuman[field_sizeByX][field_sizeByY], int y, int x, bool hit)
+{
+    // Обновляем поле в зависимости от результата атаки
+    fieldSecondHuman[y][x] = hit ? 'X' : '*';
+
+    // Выводим обновленное поле без показа кораблей
+    std::cout << "  ";
+    for (int i = 0; i < field_sizeByX; ++i)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << "\n";
+
+    for (int i = 0; i < field_sizeByY; ++i)
+    {
+        std::cout << static_cast<char>('A' + i) << " ";
+        for (int j = 0; j < field_sizeByX; ++j)
+        {
+            // Показываем только попадания 'X', промахи '*' и пустые ячейки '.'
+            if (fieldSecondHuman[i][j] == 'X' || fieldSecondHuman[i][j] == '*' || fieldSecondHuman[i][j] == empty_cell)
+            {
+                std::cout << fieldSecondHuman[i][j] << " ";
             }
             else
             {
@@ -593,7 +658,7 @@ void AttackPlayer(char fieldFirstHuman[field_sizeByX][field_sizeByY], char field
                 checkHitAndUpdateField(fieldSecondHuman, AttackByAngleY - 1, AttackByAngleX, ship_cellFourSecondHuman))
             {
                 std::cout << "Попадание!\n\n";
-                updateAndPrintField(fieldSecondHuman, AttackByAngleY - 1, AttackByAngleX, true);
+                updateAndPrintFieldFirstHuman(fieldSecondHuman, AttackByAngleY - 1, AttackByAngleX, true);
                 shipsSunkSecondHuman++;
 
                 continue; // Первый человек атакует снова
@@ -601,7 +666,7 @@ void AttackPlayer(char fieldFirstHuman[field_sizeByX][field_sizeByY], char field
             else
             {
                 std::cout << "Промах.\n\n";
-                updateAndPrintField(fieldSecondHuman, AttackByAngleY - 1, AttackByAngleX, false);
+                updateAndPrintFieldFirstHuman(fieldSecondHuman, AttackByAngleY - 1, AttackByAngleX, false);
             }
         }
         else
@@ -641,14 +706,14 @@ void AttackPlayer(char fieldFirstHuman[field_sizeByX][field_sizeByY], char field
                 checkHitAndUpdateField(fieldFirstHuman, AttackByAngleY - 1, AttackByAngleX, ship_cellFourFirstHuman))
             {
                 std::cout << "Попадание!\n\n";
-                updateAndPrintField(fieldSecondHuman, AttackByAngleY - 1, AttackByAngleX, true);
+                updateAndPrintFieldSecondHuman(fieldFirstHuman, AttackByAngleY - 1, AttackByAngleX, true);
                 continue; // Второй человек атакует снова
 
             }
             else
             {
                 std::cout << "Промах.\n\n";
-                updateAndPrintField(fieldSecondHuman, AttackByAngleY - 1, AttackByAngleX, false);
+                updateAndPrintFieldSecondHuman(fieldFirstHuman, AttackByAngleY - 1, AttackByAngleX, false);
             }
         }
         else
