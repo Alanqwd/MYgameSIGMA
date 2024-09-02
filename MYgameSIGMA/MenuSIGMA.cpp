@@ -12,9 +12,9 @@ void Menu()
 
 	do
 	{
-		std::cout << "Пусть первый человек введет имя: ";
+		std::cout << "Пусть первый игрок введет имя: ";
 		std::getline(std::cin, NameFirstHuman);
-		std::cout << "\nПусть второй человек введет имя: ";
+		std::cout << "\nПусть второй игрок введет имя: ";
 		std::getline(std::cin, NameSecondHuman);
 
 		if (NameFirstHuman.empty() || NameSecondHuman.empty())
@@ -25,7 +25,7 @@ void Menu()
 			system("cls");
 		}
 	} while (NameFirstHuman.empty() || NameSecondHuman.empty());
-	std::cout << "\n\n";
+	system("cls");
 	std::cout << " ____      ____    __   __       ___ " << "\n";
 	std::cout << "|      |  |       |  | | |      /  |" << "\n";
 	std::cout << " |     |  |       |  |_| |     /   |" << "\n";

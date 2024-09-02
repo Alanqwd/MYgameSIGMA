@@ -133,7 +133,7 @@ void placeShipsFirstHuman(char fieldFirstHuman[field_sizeByX][field_sizeByY])
     system("cls");
     std::cout << "Пусть ";
     std::cout << NameFirstHuman;
-    std::cout << " заполнит поле кораблями: \n";
+    std::cout << " заполнит поле кораблями:\n\n";
 
     // Первый корабль
     FieldShipsFirstHuman();
@@ -338,7 +338,7 @@ void placeShipsSecondHuman(char fieldSecondHuman[field_sizeByX][field_sizeByY])
     // Первый корабль  
     std::cout << "Пусть ";
     std::cout << NameSecondHuman;
-    std::cout << " заполнит поле кораблями: \n";
+    std::cout << " заполнит поле кораблями:\n\n";
     FieldShipsSecondHuman();
     std::cout << "\nВыбери цифрой расположение для 1 корабля по вертикали: ";
     if (!(std::cin >> tempInput))
@@ -608,6 +608,7 @@ void updateAndPrintFieldSecondHuman(char fieldSecondHuman[field_sizeByX][field_s
         std::cout << "\n";
     }
 }
+
 // Работает 
 
 // Атака на противника
@@ -619,20 +620,18 @@ void AttackPlayer(char fieldFirstHuman[field_sizeByX][field_sizeByY], char field
     int shipsSunkSecondHuman = 0;
 
 
-    std::cout << "Помните:\n 1 - Попадание отмечается символом X, промах отмечается символом *\n 2 - Если кто-то потопил корабль противника, то он еще раз атакует противника \n 3 - У вас есть 5 раундов";
-    std::cout << "\n 4 - Выигрывает тот кто больше всего потопил кораблей\n";
+    std::cout << "Помните:\n 1 - Попадание отмечается символом X, промах отмечается символом *\n 2 - Если кто-то потопил корабль противника, то он повторно атакует противника \n 3 - У вас есть 5 раундов\n 4 - Выигрывает тот, кто больше всего потопил кораблей\n";
     std::this_thread::sleep_for(std::chrono::seconds(2));
     system("pause");
     system("cls");
     for (int round = 1; round <= rounds; ++round)
     {
-        std::cout << "\n" << round << " Раунд!\n\n";
-        std::cout << "==========================================\n";
+        std::cout << round << " Раунд!\n";
+        std::cout << "==========================================\n\n";
         std::cout << NameFirstHuman;
         std::cout << " атакует ";
         std::cout << NameSecondHuman;
-        std::cout << "\n";
-        std::cout << "Выберите расположение атаки по вертикали: ";
+        std::cout << "\n\nВыберите расположение атаки по вертикали: ";
         while (!(std::cin >> AttackByAngleY) || AttackByAngleY <= 0 || AttackByAngleY > field_sizeByY)
         {
             std::cout << "Ошибка! Введите число от 1 до " << field_sizeByY << ": ";
@@ -679,8 +678,7 @@ void AttackPlayer(char fieldFirstHuman[field_sizeByX][field_sizeByY], char field
         std::cout << NameSecondHuman;
         std::cout << " атакует ";
         std::cout << NameFirstHuman;
-        std::cout << "\n";
-        std::cout << "Выберите расположение атаки по вертикали: ";
+        std::cout << "\n\nВыберите расположение атаки по вертикали: ";
         while (!(std::cin >> AttackByAngleY) || AttackByAngleY <= 0 || AttackByAngleY > field_sizeByY)
         {
             std::cout << "Ошибка! Введите число от 1 до " << field_sizeByY << ": ";
@@ -725,15 +723,15 @@ void AttackPlayer(char fieldFirstHuman[field_sizeByX][field_sizeByY], char field
     }
     if (shipsSunkSecondHuman > shipsSunkFirstHuman)
     {
-        std::cout << "Первый человек победил, потопив больше кораблей!\nБой окончен!\n";
+        std::cout << "\nПервый человек победил, потопив больше кораблей!\nБой окончен!\n";
     }
     else if (shipsSunkFirstHuman > shipsSunkSecondHuman)
     {
-        std::cout << "Второй человек победил, потопив больше кораблей!\nБой окончен!\n";
+        std::cout << "\nВторой человек победил, потопив больше кораблей!\nБой окончен!\n";
     }
     else
     {
-        std::cout << "Ничья! Оба игрока потопили одинаковое количество кораблей или не попали не разу.\nБой окончен!\n";
+        std::cout << "\nНичья! Оба игрока потопили одинаковое количество кораблей или не попали не разу.\nБой окончен!\n";
     }
     std::this_thread::sleep_for(std::chrono::seconds(3));
     system("pause");
@@ -748,7 +746,7 @@ void AttackPlayer(char fieldFirstHuman[field_sizeByX][field_sizeByY], char field
 void Games()
 {
 
-    std::cout << "\n\nПравила игры:\n1 - Вам даются ровно по 4 корабля\n2 - Выигрывает то кто больше всего потопил кораблей у противника!\n\n";
+    std::cout << "Правила игры:\n1 - Вам даются ровно по 4 корабля\n2 - Выигрывает то, кто больше всего потопил кораблей у противника!\n\n";
     std::this_thread::sleep_for(std::chrono::seconds(3));
     std::cout << "ПОПЫТАЙСЯ ВЫЖИТЬ В СМЕРТЕЛЬНОМ СРАЖЕНИЕ!\n\n";
     std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -765,7 +763,7 @@ void Games()
     std::cout << "======================================\n";
     std::cout << "Вы расставили все корабли на поле боя!\n";
     std::cout << "Теперь время атаковать противника!\n";
-    std::cout << "======================================\n";
+    std::cout << "======================================\n\n";
     AttackPlayer(fieldSecondHuman, fieldFirstHuman);
 
 
